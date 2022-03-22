@@ -3,6 +3,7 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const db = require('../../models')
+const requiresToken = require('../requiresToken')
 
 // POST /users/register - CREATE a new user
 router.post('/register', async (req, res) => {
@@ -84,8 +85,11 @@ router.post('/login', async (req, res) => {
 })
 
 // GET /users/auth-locked - example of checking a jwt and not serving data unless the jwt is vaild
-router.get('/auth-locked', (req, res) => {
-    res.send('validate a token')
+router.get('/auth-locked', requiresToken, (req, res) => {
+    // res.send('validate a token')
+    // here we have access to the user on the res.locals (with requiresToken middleware)
+    console.log('logged in user', res.locals.user)
+    res.json({ msg: 'welcome to the auth-locked route' })
 })
 
 module.exports = router

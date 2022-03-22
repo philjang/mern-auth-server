@@ -11,7 +11,7 @@ app.use(express.json()); // for json request bodies
 
 // basically what the morgan npm does
 const myMiddleWare = (req, res, next) => {
-    console.log('hello from inside a middleware')
+    // console.log('hello from inside a middleware')
     console.log(`incoming request: ${req.method} - ${req.url}`)
     next()
 }
